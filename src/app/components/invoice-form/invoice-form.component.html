@@ -1,0 +1,74 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()"  novalidate>
+
+  <div class="form-grid">
+    <!-- Personal Details -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Full Name</mat-label>
+      <input matInput formControlName="fullName" required />
+      <mat-error *ngIf="form.get('fullName')?.hasError('required') && form.get('fullName')?.touched">
+        Full Name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Email Address</mat-label>
+      <input matInput formControlName="email" required />
+      <mat-error *ngIf="form.get('email')?.hasError('required') && form.get('email')?.touched">
+        Email is required
+      </mat-error>
+      <mat-error *ngIf="form.get('email')?.hasError('email') && form.get('email')?.touched">
+        Please enter a valid email address
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Phone Number</mat-label>
+      <input matInput formControlName="phone" />
+      <mat-error *ngIf="form.get('phone')?.hasError('invalidPhone') && form.get('phone')?.touched">
+        Please enter a valid phone number
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Invoice Details -->
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Invoice Number</mat-label>
+      <input matInput formControlName="invoiceNumber" required />
+      <mat-error *ngIf="form.get('invoiceNumber')?.hasError('required') && form.get('invoiceNumber')?.touched">
+        Invoice Number is required
+      </mat-error>
+      <mat-error *ngIf="form.get('invoiceNumber')?.hasError('alphanumeric') && form.get('invoiceNumber')?.touched">
+        Invoice Number must be alphanumeric
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Amount</mat-label>
+      <input matInput type="number" formControlName="amount" min="0" required />
+      <mat-error *ngIf="form.get('amount')?.hasError('required') && form.get('amount')?.touched">
+        Amount is required
+      </mat-error>
+      <!-- <mat-error *ngIf="form.get('amount')?.hasError('positiveNumber') && form.get('amount')?.touched">
+        Amount must be a positive number
+      </mat-error> -->
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Invoice Date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="invoiceDate" required />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="form.get('invoiceDate')?.hasError('required') && form.get('invoiceDate')?.touched">
+        Invoice Date is required
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="buttons-wrapper">
+
+    <button type="submit" mat-raised-button color="primary"  >
+      Clear
+    </button>
+      <button type="submit" mat-raised-button color="primary" >
+        Submit
+      </button>
+  </div>
+</form>
