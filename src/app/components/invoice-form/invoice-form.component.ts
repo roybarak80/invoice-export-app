@@ -7,6 +7,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { alphanumericValidator, phoneValidator, positiveNumberValidator } from '../../utils/validators';
 
 @Component({
   selector: 'app-invoice-form',
@@ -34,16 +35,20 @@ export class InvoiceFormComponent {
   ngOnInit(): void {
     this.form = this.fb.group({
       fullName: ['', Validators.required],
-      email: ['', Validators.required],
-      phone: [''],
-      invoiceNumber: ['', [Validators.required]],
-      amount: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', phoneValidator],
+      invoiceNumber: ['', [Validators.required, alphanumericValidator]],
+      amount: ['', [Validators.required, positiveNumberValidator]],
       invoiceDate: ['', Validators.required]
     });
   }
 
-  onSubmit(){
-    console.log(123);
+  async onSubmit(): Promise<void> {
+    if (this.form.invalid ) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
+    alert('sucess')
   }
 }
