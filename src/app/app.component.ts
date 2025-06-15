@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
   selector: 'app-root',
   standalone: true,
   imports: [InvoiceFormComponent, HttpClientModule],
-  template: `<app-invoice-form></app-invoice-form>`
+  templateUrl: '../app/app.component.html',
+  styleUrl:'./app.component.scss',
+
 })
 export class AppComponent {}
