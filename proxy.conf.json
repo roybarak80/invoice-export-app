@@ -1,0 +1,12 @@
+{
+  "/api/invoices": {
+    "target": "http://localhost:3000/invoices",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/api/invoices/upload-pdf": {
+    "target": "http://localhost:3000/invoices",
+    "secure": false,
+    "changeOrigin": true
+  }
+}
