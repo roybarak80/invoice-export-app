@@ -3,17 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-
-export interface Invoice {
-  fullName: string;
-  email: string;
-  phone?: string;
-  invoiceNumber: string;
-  amount: number;
-  invoiceDate: string;
-  signature: string;
-  pdf?: string;
-}
+import { Invoice } from '../interface/invoice.interface'
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +12,12 @@ export class InvoiceService {
   private apiUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {}
+
+  getInvoices(): Observable<Invoice[]> {
+    return this.http.get<Invoice[]>(`${this.apiUrl}/invoices`).pipe(
+      catchError(this.handleError)
+    );
+  }
 
   submitInvoice(formData: Invoice): Observable<Invoice> {
     return this.http.post<Invoice>(`${this.apiUrl}/invoices`, {

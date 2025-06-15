@@ -10,8 +10,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { InvoiceService, Invoice } from '../../services/invoice.service';
+import { InvoiceService } from '../../services/invoice.service';
 import jsPDF from 'jspdf';
+import { InvoiceListComponent } from "../invoice-list/invoice-list.component";
+import { Invoice } from '../../interface/invoice.interface';
 
 @Component({
   selector: 'app-invoice-form',
@@ -27,8 +29,9 @@ import jsPDF from 'jspdf';
     MatNativeDateModule,
     SignaturePadComponent,
     MatButtonModule,
-    MatSnackBarModule
-  ],
+    MatSnackBarModule,
+    InvoiceListComponent
+],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InvoiceFormComponent implements OnInit {

@@ -1,0 +1,40 @@
+<div class="header-invoice-list">
+  <span>{{invoices.length}}</span>
+<button></button>
+
+</div>
+
+<!-- <div class="invoice-list-container">
+  <h2>Invoices ({{ invoices.length }})</h2>
+  <mat-table [dataSource]="invoices" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+      <mat-cell *matCellDef="let invoice">{{ invoice.id }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="fullName">
+      <mat-header-cell *matHeaderCellDef>Full Name</mat-header-cell>
+      <mat-cell *matCellDef="let invoice">{{ invoice.fullName }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="invoiceNumber">
+      <mat-header-cell *matHeaderCellDef>Invoice Number</mat-header-cell>
+      <mat-cell *matCellDef="let invoice">{{ invoice.invoiceNumber }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="amount">
+      <mat-header-cell *matHeaderCellDef>Amount</mat-header-cell>
+      <mat-cell *matCellDef="let invoice">{{ invoice.amount | currency }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="invoiceDate">
+      <mat-header-cell *matHeaderCellDef>Invoice Date</mat-header-cell>
+      <mat-cell *matCellDef="let invoice">{{ invoice.invoiceDate | date }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+      <mat-cell *matCellDef="let invoice">
+        <button mat-button color="primary" (click)="regeneratePdf(invoice)">Re-generate PDF</button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div> -->
