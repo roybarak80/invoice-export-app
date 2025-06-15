@@ -66,6 +66,18 @@ export class InvoiceFormComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
+  resetForm(){
+   this.form.reset();
+   this.form.markAsPristine();
+   this.form.markAsUntouched();
+   Object.keys(this.form.controls).forEach(key => {
+     this.form.get(key)?.setErrors(null);
+   });
+   this.signaturePadComponent.clear();
+   this.signatureProvided = false;
+   this.cdr.markForCheck();
+  }
+
   async onSubmit(): Promise<void> {
     if (this.form.invalid || !this.signatureProvided) {
       this.form.markAllAsTouched();
@@ -120,16 +132,8 @@ export class InvoiceFormComponent implements OnInit {
         panelClass: ['success-snackbar']
       });
 
-      // Reset form completely
-      this.form.reset();
-      this.form.markAsPristine();
-      this.form.markAsUntouched();
-      Object.keys(this.form.controls).forEach(key => {
-        this.form.get(key)?.setErrors(null);
-      });
-      this.signaturePadComponent.clear();
-      this.signatureProvided = false;
-      this.cdr.markForCheck();
+      this.resetForm();
+
     } catch (error: any) {
       this.snackBar.open(error.message || 'Submission failed. Please try again or contact support.', 'Close', {
         duration: 5000,
