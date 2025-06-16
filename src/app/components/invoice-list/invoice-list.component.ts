@@ -3,9 +3,13 @@ import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@
    import { MatTableModule } from '@angular/material/table';
    import { MatButtonModule } from '@angular/material/button';
    import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+   import { MatListModule } from '@angular/material/list';
    import { InvoiceService } from '../../services/invoice.service';
    import jsPDF from 'jspdf';
    import { Invoice } from '../../interface/invoice.interface';
+   import {MatIconModule} from '@angular/material/icon';
+   import {MatDividerModule} from '@angular/material/divider';
+
    @Component({
      selector: 'app-invoice-list',
      standalone: true,
@@ -13,7 +17,10 @@ import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@
        CommonModule,
        MatTableModule,
        MatButtonModule,
-       MatSnackBarModule
+       MatSnackBarModule,
+       MatListModule,
+       MatIconModule,
+       MatDividerModule
      ],
      templateUrl: './invoice-list.component.html',
      styleUrls: ['./invoice-list.component.scss'],
@@ -43,6 +50,7 @@ import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@
          error: () => this.snackBar.open('Failed to load invoices.', 'Close', { duration: 5000 })
        });
      }
+
 
      regeneratePdf(invoice: Invoice): void {
        const pdf = new jsPDF();

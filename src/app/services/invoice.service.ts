@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError, tap, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Invoice } from '../interface/invoice.interface'
@@ -10,6 +10,8 @@ import { Invoice } from '../interface/invoice.interface'
 })
 export class InvoiceService {
   private apiUrl = environment.apiBaseUrl;
+  isDisplayInvoices$ = new BehaviorSubject<boolean>(false);
+  private invoiceCreated = new Subject<void>();
 
   constructor(private http: HttpClient) {}
 
@@ -19,13 +21,18 @@ export class InvoiceService {
     );
   }
 
+  get invoiceCreated$(): Observable<void> {
+    return this.invoiceCreated.asObservable();
+  }
+
   submitInvoice(formData: Invoice): Observable<Invoice> {
     return this.http.post<Invoice>(`${this.apiUrl}/invoices`, {
       ...formData,
       invoiceDate: new Date(formData.invoiceDate).toISOString(),
       createdAt: new Date().toISOString()
     }).pipe(
-      catchError(this.handleError)
+      catchError(this.handleError),
+      tap(() => this.invoiceCreated.next())
     );
   }
 
@@ -40,7 +47,8 @@ export class InvoiceService {
           invoiceDate: new Date(formData.invoiceDate).toISOString(),
           createdAt: new Date().toISOString()
         }).pipe(
-          catchError(this.handleError)
+          catchError(this.handleError),
+          tap(() => this.invoiceCreated.next())
         ).subscribe({
           next: (response) => observer.next(response),
           error: (error) => observer.error(error),

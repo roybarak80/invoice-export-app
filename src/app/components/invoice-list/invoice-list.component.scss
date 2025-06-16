@@ -1,18 +1,11 @@
-.invoice-list-container {
-  padding: 20px;
+:host{
+  width: 70%;
 }
-
-mat-table {
-  width: 100%;
-  margin-top: 20px;
-}
-
-mat-header-cell, mat-cell {
-  padding: 10px;
-}
-
-.header-invoice-list{
-  background-color: red;
-  height: 30px;
-  width: 100%;
+mat-list{
+  .wrapper{
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }

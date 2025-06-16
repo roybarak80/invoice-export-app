@@ -1,0 +1,25 @@
+@import "../../../theme";
+:host{
+  width: 100%;
+  font-size: clamp(2rem, 6vw, 3rem); /* Responsive font size */
+  color: $main-white;
+  height: inherit;
+}
+
+.wrapper{
+
+span:first-child {
+  font-size: clamp(2rem, 6vw, 3rem); /* Responsive font size */
+  color: $main-white;
+}
+
+span:last-child {
+  font-size: clamp(1rem, 3vw, 1.25rem); /* Responsive secondary text */
+}
+  display: flex;
+  justify-content: center;
+  align-items: center;
+height: inherit;
+  flex-direction: column;
+  text-align: center;
+}

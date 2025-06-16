@@ -34,7 +34,6 @@ import { CommonModule } from '@angular/common';
     canvas {
       width: 100%;
       height: 150px;
-      border: 1px dashed gray;
       touch-action: none;
     }
     button {

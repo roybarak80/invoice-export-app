@@ -1,21 +1,87 @@
+// /* Set root font size for consistent rem scaling */
+html {
+  font-size: 16px;
+}
+
+/* Form styling */
 form {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  justify-content: space-around;
+  min-height: 100vh; /* Full viewport height */
+  padding: 1rem; /* Responsive padding */
+  box-sizing: border-box; /* Ensure padding doesn’t affect width */
 }
+
+/* Responsive grid layout */
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); /* Smaller min size for mobile */
+  gap: 1rem; /* Scalable gap */
 }
 
+/* Form fields */
 mat-form-field {
-  width: 100%;
+  width: 100%; /* Fill grid column */
+  font-size: 1rem; /* Scalable font size */
 }
 
+/* Signature pad (assumed styling for <app-signature-pad>) */
+app-signature-pad {
+  width: 100%;
+  // max-width: clamp(23rem, 50vw, 10rem);
+  // aspect-ratio: 4 / 2;
+  margin: 1rem 0; /* Scalable spacing */
+}
+
+/* Error message styling */
+.error-message {
+  color: #d32f2f; /* Material error color */
+  font-size: 0.875rem; /* Scalable font size */
+  margin: 0.5rem 0; /* Scalable spacing */
+}
+
+/* Buttons wrapper */
 .buttons-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem; /* Scalable gap */
+  padding: 1rem 0; /* Scalable padding */
+}
+
+/* Button styling */
+button[mat-raised-button] {
+  min-width: 6rem; /* Prevent buttons from shrinking too much */
+  padding: 0.5rem 1rem; /* Scalable padding */
+  font-size: 0.875rem; /* Scalable font size */
+}
+
+/* Media queries for different screen sizes */
+@media (max-width: 576px) {
+  html {
+    font-size: 14px; /* Smaller root font for mobile */
+  }
+
+  .form-grid {
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); /* Even smaller columns for small screens */
+    gap: 0.75rem; /* Slightly smaller gap */
+  }
+
+  form {
+    padding: 0.5rem; /* Reduced padding for mobile */
+  }
+
+  app-signature-pad {
+    max-width: 100%; /* Full width on small screens */
+  }
+}
+
+@media (min-width: 769px) {
+  form {
+    padding: 2rem; /* Larger padding for desktop */
+  }
+
+  .form-grid {
+    gap: 1.5rem; /* Larger gap for desktop */
+  }
 }

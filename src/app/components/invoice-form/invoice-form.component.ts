@@ -12,8 +12,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { InvoiceService } from '../../services/invoice.service';
 import jsPDF from 'jspdf';
-import { InvoiceListComponent } from "../invoice-list/invoice-list.component";
 import { Invoice } from '../../interface/invoice.interface';
+import { InvoiceHeaderComponent } from '../invoice-header/invoice-header.component'
 
 @Component({
   selector: 'app-invoice-form',
@@ -30,7 +30,7 @@ import { Invoice } from '../../interface/invoice.interface';
     SignaturePadComponent,
     MatButtonModule,
     MatSnackBarModule,
-    InvoiceListComponent
+    InvoiceHeaderComponent
 ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -119,19 +119,19 @@ export class InvoiceFormComponent implements OnInit {
 
       const pdfBlob = pdf.output('blob');
       const url = URL.createObjectURL(pdfBlob);
-      const newWindow = window.open(url, '_blank');
-      if (!newWindow) {
-        this.snackBar.open('Popup blocked. Please allow popups or download manually.', 'Close', {
-          duration: 5000,
-          panelClass: ['error-snackbar']
-        });
-      }
+      // const newWindow = window.open(url, '_blank');
+      // if (!newWindow) {
+      //   this.snackBar.open('Popup blocked. Please allow popups or download manually.', 'Close', {
+      //     duration: 5000,
+      //     panelClass: ['error-snackbar']
+      //   });
+      // }
 
-      await this.invoiceService.submitInvoice(formData).toPromise();
+      await this.invoiceService.submitInvoice(formData, ).toPromise();
       await this.invoiceService.submitPdf(pdfBlob, formData).toPromise();
 
       this.snackBar.open('Invoice submitted successfully!', 'Close', {
-        duration: 3000,
+        duration: 5000,
         panelClass: ['success-snackbar']
       });
 
