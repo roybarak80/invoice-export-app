@@ -1,13 +1,16 @@
 <div class="wrapper">
   <div class="layout-wrapper">
     <div class="right-cont">
-      <div class="cont">
-      <span>Welcome!</span>
-      <br>
-      <span>Here you could export an invoice to a PDF file.</span>
-    </div>
+
+        @if(invoiceSrv.isDisplayInvoices$ | async){
+        <app-invoice-list></app-invoice-list>
+        } @else {
+        <app-welcome></app-welcome>
+        }
+
     </div>
     <div class="left-cont">
+      <app-invoice-header></app-invoice-header>
       <app-invoice-form></app-invoice-form>
     </div>
   </div>

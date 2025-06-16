@@ -1,0 +1,18 @@
+@if(invoices.length){
+
+  <mat-list>
+    @for (invoice of invoices; track invoice; let i = $index) {
+      <mat-list-item>
+        <div class="wrapper">
+          <span>{{i + 1}}.</span>
+          <span>{{invoice.invoiceNumber}}</span>
+          <span>{{invoice.invoiceDate | date}}</span>
+          <button mat-icon-button color="basic" (click)="regeneratePdf(invoice)">
+            <mat-icon>open_in_new</mat-icon>
+          </button>
+        </div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    }
+  </mat-list>
+}

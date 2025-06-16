@@ -1,0 +1,9 @@
+<div class="header-invoice-list">
+<button mat-stroked-button [disabled]="!invoices.length" matBadge="{{invoices.length}}" [matBadgeHidden]="!invoices.length" (click)="displayInvoices()">
+  @if(isDisplayInvoice){
+    Hide invoice
+  } @else {
+    Dispaly invoice
+  }
+</button>
+</div>

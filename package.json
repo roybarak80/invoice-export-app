@@ -6,10 +6,10 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-"start": "ng serve",
+    "start": "ng serve",
     "start:api": "node server.js",
     "start:all": "concurrently --names \"ANGULAR,API\" \"npm run start\" \"npm run start:api\""
-},
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^17.3.0",
@@ -25,6 +25,7 @@
     "html2canvas": "^1.4.1",
     "json-server": "^0.17.4",
     "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
     "ngx-signaturepad": "^0.0.10",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -37,12 +38,12 @@
     "@types/jasmine": "~5.1.0",
     "concurrently": "^9.1.2",
     "jasmine-core": "~5.1.0",
+    "json-server": "^0.17.4",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.4.2",
-    "json-server": "^0.17.4"
+    "typescript": "~5.4.2"
   }
 }

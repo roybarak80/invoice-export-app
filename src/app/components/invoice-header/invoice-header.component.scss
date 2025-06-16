@@ -1,0 +1,23 @@
+@import "../../../theme";
+
+.invoice-list-container {
+  padding: 20px;
+}
+
+mat-table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+mat-header-cell, mat-cell {
+  padding: 10px;
+}
+
+.header-invoice-list{
+  background-color: #f55951;
+  height: 3rem;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
