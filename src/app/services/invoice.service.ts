@@ -36,29 +36,6 @@ export class InvoiceService {
     );
   }
 
-  submitPdf(pdfBlob: Blob, formData: Invoice): Observable<Invoice> {
-    return new Observable((observer) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const pdfBase64 = reader.result as string;
-        this.http.post<Invoice>(`${this.apiUrl}/invoices/upload-pdf`, {
-          ...formData,
-          pdf: pdfBase64,
-          invoiceDate: new Date(formData.invoiceDate).toISOString(),
-          createdAt: new Date().toISOString()
-        }).pipe(
-          catchError(this.handleError),
-          tap(() => this.invoiceCreated.next())
-        ).subscribe({
-          next: (response) => observer.next(response),
-          error: (error) => observer.error(error),
-          complete: () => observer.complete()
-        });
-      };
-      reader.readAsDataURL(pdfBlob);
-    });
-  }
-
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unexpected error occurred. Please try again.';
     if (error.status === 400) {

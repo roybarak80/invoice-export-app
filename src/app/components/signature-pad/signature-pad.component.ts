@@ -27,14 +27,15 @@ import { CommonModule } from '@angular/common';
   `,
   styles: [`
     .signature-pad {
-      border: 1px solid #ccc;
       position: relative;
       width: 100%;
     }
     canvas {
       width: 100%;
-      height: 150px;
+      height: 70%;
       touch-action: none;
+      background-color:white;
+      border: 1px solid #ccc;
     }
     button {
       margin-top: 8px;

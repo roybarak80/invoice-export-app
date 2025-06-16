@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
    import { CommonModule } from '@angular/common';
    import { MatTableModule } from '@angular/material/table';
    import { MatButtonModule } from '@angular/material/button';
@@ -9,6 +9,7 @@ import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@
    import { Invoice } from '../../interface/invoice.interface';
    import {MatIconModule} from '@angular/material/icon';
    import {MatDividerModule} from '@angular/material/divider';
+   import { Subscription } from 'rxjs';
 
    @Component({
      selector: 'app-invoice-list',
@@ -26,9 +27,10 @@ import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@
      styleUrls: ['./invoice-list.component.scss'],
      changeDetection: ChangeDetectionStrategy.OnPush
    })
-   export class InvoiceListComponent implements OnInit {
+   export class InvoiceListComponent implements OnInit, OnDestroy {
      invoices: Invoice[] = [];
      displayedColumns: string[] = ['id', 'fullName', 'invoiceNumber', 'amount', 'invoiceDate', 'actions'];
+     private subscription: Subscription = new Subscription();
 
      constructor(
        private invoiceService: InvoiceService,
@@ -38,6 +40,11 @@ import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@
 
      ngOnInit(): void {
        this.loadInvoices();
+       this.subscription.add(
+        this.invoiceService.invoiceCreated$.subscribe(() => {
+          this.loadInvoices();
+        })
+      );
      }
 
      loadInvoices(): void {
@@ -76,4 +83,8 @@ import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@
          this.snackBar.open('Popup blocked. Please allow popups.', 'Close', { duration: 5000 });
        }
      }
+
+     ngOnDestroy(): void {
+      this.subscription.unsubscribe();
+    }
    }
