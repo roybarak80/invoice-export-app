@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { SignaturePadComponent } from '../signature-pad/signature-pad.component';
-import { alphanumericValidator, phoneValidator, positiveNumberValidator } from '../../utils/validators';
+import { alphanumericValidator, phoneNumberValidator, positiveNumberValidator } from '../../utils/validators';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,7 +9,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import {
+  MatSnackBar, MatSnackBarModule, MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 import { InvoiceService } from '../../services/invoice.service';
 import jsPDF from 'jspdf';
 import { Invoice } from '../../interface/invoice.interface';
@@ -36,6 +39,8 @@ export class InvoiceFormComponent implements OnInit {
   form!: FormGroup;
   signatureProvided = false;
   isSubmitting = false;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
   @ViewChild(SignaturePadComponent) signaturePadComponent!: SignaturePadComponent;
 
   constructor(
@@ -43,13 +48,17 @@ export class InvoiceFormComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private invoiceService: InvoiceService,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.form = this.fb.group({
+    this.createForm();
+  }
+
+  private createForm() {
+    return this.form = this.fb.group({
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', phoneValidator],
+      phone: ['', [Validators.required, Validators.pattern('^[- +()0-9]+$')]],
       invoiceNumber: ['', [Validators.required, alphanumericValidator]],
       amount: ['', [Validators.required, positiveNumberValidator]],
       invoiceDate: ['', Validators.required],
@@ -76,11 +85,14 @@ export class InvoiceFormComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
-  resetForm() {
+  resetForm(): void {
     this.form.reset();
-    this.form.markAllAsTouched();
+    this.form.markAsPristine();
+    this.form.markAsUntouched();
+    Object.keys(this.form.controls).forEach(key => {
+      this.form.get(key)?.setErrors(null);
+    });
     this.signaturePadComponent.clear();
-    this.form.get('signature')?.setValue('');
     this.signatureProvided = false;
     this.isSubmitting = false;
     this.cdr.markForCheck();
@@ -92,6 +104,8 @@ export class InvoiceFormComponent implements OnInit {
       this.snackBar.open('Please fill all required fields and provide a signature.', 'Close', {
         duration: 3000,
         panelClass: ['error-snackbar'],
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
       });
       this.cdr.markForCheck();
       return;
@@ -127,6 +141,8 @@ export class InvoiceFormComponent implements OnInit {
       this.snackBar.open('Invoice submitted successfully!', 'Close', {
         duration: 3000,
         panelClass: ['success-snackbar'],
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
       });
 
       this.resetForm();
@@ -134,7 +150,10 @@ export class InvoiceFormComponent implements OnInit {
       this.snackBar.open(error.message || 'Submission failed. Please try again or contact support.', 'Close', {
         duration: 5000,
         panelClass: ['error-snackbar'],
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
       });
+
     } finally {
       this.isSubmitting = false;
       this.cdr.markForCheck();
