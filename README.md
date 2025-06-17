@@ -1,70 +1,57 @@
-Invoice Export App
-This Angular application allows users to create invoices, generate PDFs, and view a list of submitted invoices. It uses json-server as a mock backend to persist invoice data and demonstrates a clear API contract between the frontend and backend.
-Features
+# Invoice Export App
 
-Invoice Creation: Users input personal and invoice details via a reactive form with validation, including a required signature drawn using a canvas.
-PDF Generation: Generates downloadable PDFs with invoice details and signatures using jspdf.
-Invoice List: Displays all invoices with a count and allows re-generation of PDFs.
-Customized Snackbar: Success messages (e.g., invoice submission) use a green background, while errors (e.g., validation, network) use red for clear feedback.
-API Contract: Defined in docs/api.md, specifying POST /api/invoices and GET /api/invoices endpoints, request/response formats, and error handling.
-Testing: API endpoints can be tested in Postman using docs/invoice-export-api.postman_collection.json.
+A Dockerized application featuring an Angular frontend served by Nginx and a `json-server` backend providing mock invoice data at `http://localhost:3000/api/invoices`. Docker Compose is used to manage both services.
 
-Prerequisites
+A demo video showcasing the application's usage is available in the repository.
 
-Node.js 18.x or higher
-Angular CLI 17.3.17
-Postman (optional, for API testing)
+## Docker Images
+- **Frontend**: `roybarak1/invoice-angular-app:latest` ([Docker Hub](https://hub.docker.com/r/roybarak1/invoice-angular-app))
+- **Backend**: Uses the standard `node:18` image with `json-server`
 
-Setup
+## Prerequisites
+- [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) (v2.0 or later) installed
 
-Clone the repository:git clone <repository-url>
+## Getting Started
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/roybarak80/invoice-export-app.git
 cd invoice-export-app
+```
 
+### 2. Run with Docker Compose
+```bash
+docker-compose up -d
+```
 
-Install dependencies:npm install
+### 3. Expected Output
+```
+✔ Network invoice-export-app_app-network   Created
+✔ Container invoice-export-app-backend-1   Started
+✔ Container invoice-export-app-frontend-1  Started
+```
 
+### 4. Access the Application
+- **Frontend**: Open [http://localhost:8080](http://localhost:8080) in a browser (use incognito mode to avoid caching issues).
+- **Backend API**: Test with `curl http://localhost:3000/api/invoices` or visit in a browser.
 
+## Files Included
+- `docker-compose.yml`: Defines frontend and backend services
+- `Dockerfile`: Builds the Angular frontend
+- `nginx.conf`: Configures Nginx for Angular routing
+- `db.json`: Mock data for `json-server`
+- `server.js`: Configures `json-server` to serve `/api/invoices`
+- `package.json`: Lists dependencies, including `json-server`
 
-Running the Application
+## Additional Information
+- **Source Code**: [https://github.com/roybarak80/invoice-export-app](https://github.com/roybarak80/invoice-export-app)
+- **Note**: If the app doesn’t load in a regular browser, clear the cache or use incognito mode.
+- **Troubleshooting**: If the `invoice-export-app-backend-1` container is not running, restart it with:
+  ```bash
+  docker-compose restart invoice-export-app-backend-1
+  ```
 
-Start the application and mock backend:npm run start:all
+## Contact
+For questions or feedback, please contact Roy Barak via [GitHub](https://github.com/roybarak80).
 
-
-Angular runs on http://localhost:4200.
-json-server runs on http://localhost:3000.
-
-
-Alternatively:
-Run Angular only: npm run start
-Run json-server only: npm run start:api
-
-
-
-API Contract
-The API contract is documented in docs/api.md, detailing endpoints (POST /api/invoices, GET /api/invoices), request/response schemas, and error handling. Test the API using Postman with the collection in docs/invoice-export-api.postman_collection.json.
-Development
-
-Code Scaffolding: Generate components, services, etc., using:ng generate component component-name --standalone
-
-
-Build: Build the project for production:ng build --configuration production
-
-Artifacts are stored in dist/.
-Unit Tests: Run tests with Karma:ng test
-
-
-End-to-End Tests: Add an E2E testing package (e.g., Cypress) and run:ng e2e
-
-
-
-Project Structure
-
-src/app/components/invoice-form: Handles invoice creation and PDF generation.
-src/app/components/invoice-list: Displays invoices with count and PDF re-generation.
-src/app/services/invoice.service.ts: Manages API communication.
-docs/api.md: API contract documentation.
-server.js: Custom json-server middleware for endpoint routing.
-db.json: Mock backend data storage.
-
-Further Help
-For Angular CLI details, use ng help or visit the Angular CLI Documentation.
+Thank you for exploring the Invoice Export App!
