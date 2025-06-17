@@ -65,29 +65,24 @@
 </div>
    <!-- Signature Pad -->
    <app-signature-pad (signatureProvided)="onSignatureProvided($event)" #signaturePad></app-signature-pad>
-   <div *ngIf="!signatureProvided && form.touched" class="error-message">
-     Signature is required.
-   </div>
+   <div *ngIf="form.get('signature')?.hasError('required') && (form.get('signature')?.touched || isSubmitting)" class="error">
+    Signature is required.
+  </div>
 
 <div class="buttons-wrapper">
 
   <button type="submit" mat-raised-button color="primary"  (click)="clearSignature()">
     Clear
   </button>
-    <!-- Submit Button -->
     <button
     mat-raised-button
     color="primary"
     type="submit"
-    [disabled]="form.invalid || !signatureProvided || isSubmitting"
-  >
+    [disabled]="form.invalid || !signatureProvided || isSubmitting">
     {{ isSubmitting ? 'Submitting...' : 'Submit' }}
   </button>
 </div>
 
 </form>
-<!-- <div *ngIf="pdfUrl" class="pdf-preview" style="margin-top: 16px;">
-  <h3>PDF Preview:</h3>
-  <embed [src]="pdfUrl" type="application/pdf" width="100%" height="600px" />
-</div> -->
+
 

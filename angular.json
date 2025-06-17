@@ -26,6 +26,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              "src/assets/fonts/MiriamLibre-Regular.ttf",
               {
                 "glob": "**/*",
                 "input": "src/assets/fonts",

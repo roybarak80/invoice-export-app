@@ -1,79 +1,33 @@
-// @import "../theme";
-
-// .wrapper {
-//   width: 100%;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   height: 100vh;
-//   .layout-wrapper {
-//     overflow: hidden;
-//     border-radius: 10px;
-//     box-shadow: 10px 5px 5px rgb(180, 180, 180);
-//     width: 80%;
-//     height: 80vh;
-//     display: flex;
-//     .right-cont {
-//       padding: 20px;
-//       flex: 1;
-//       background-color:$main-red;
-//       display: flex;
-//       justify-content: center;
-//       align-items: center;
-//       color :$main-white;
-//       .cont {
-//         span:first-child{
-//           font-size:4em;
-//           color:$main-white;
-//         }
-//         display: flex;
-//         align-items: center;
-//         justify-content: center;
-//         flex-direction: column;
-//       }
-//     }
-//     .left-cont {
-//       padding: 20px;
-
-//       flex: 1;
-//       background-color:$main-white;
-//     }
-//   }
-// }
-/* Import theme (assumed to define $main-red, $main-white, etc.) */
 @import "../theme";
 
-/* Root font size for rem scaling */
 html {
   font-size: 16px;
 }
 
-/* Full-page wrapper */
 .wrapper {
   width: 100%;
-  min-height: 100vh; /* Full viewport height */
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box; /* Prevent padding/margin overflow */
+  box-sizing: border-box;
 }
 
-/* Layout container */
 .layout-wrapper {
   overflow: hidden;
-  border-radius: 0.625rem; /* 10px, scalable */
-  box-shadow: 0.625rem 0.3125rem 0.3125rem rgb(180, 180, 180); /* 10px 5px 5px */
-  width: 80%; /* 80% of parent width */
-  max-width: 80rem; /* Cap width for large screens */
+  border-radius: 0.625rem;
+  box-shadow: 0.625rem 0.3125rem 0.3125rem rgb(180, 180, 180);
+  width: 80%;
+  max-width: 80rem;
   display: flex;
-  flex-direction: row; /* Side-by-side for desktop */
-  height: 66vh;
+  flex-direction: row;
+  height: 70vh;
 }
 
-/* Right container (hidden on mobile) */
+
 .right-cont {
-  padding: 0.5rem;//clamp(0.75rem, 2vw, 1rem); /* Responsive padding */
-  flex: 1; /* Equal width with left-cont */
+  padding: 0.5rem;
+  flex: 1;
   background-color: $main-red;
   color: $main-white;
   border-right: 1px solid white;
@@ -81,14 +35,6 @@ html {
   height: 100%;
 }
 
-/* Content inside right-cont */
-// .right-cont .cont {
-//   display: flex;
-
-// }
-
-
-/* Left container (form) */
 .left-cont{
   flex: 1;
   background-color: $main-white;
@@ -102,41 +48,3 @@ html {
   }
 }
 
-
-/* Mobile breakpoint */
-@media (max-width: 576px) {
-  html {
-    font-size: 14px; /* Smaller root font for mobile */
-  }
-
-  .wrapper {
-    //padding: 0; /* Remove extra padding */
-  }
-
-  .layout-wrapper {
-    width: 100%;
-    box-shadow: none;
-    height: 100vh; /* Full height */
-
-  }
-
-  .right-cont {
-    display: none; /* Hide right container */
-  }
-
-  .left-cont{
-    &app-invoice-form {
-      width: 100%; /* Full width */
-
-      padding: 1.5em; /* Slightly smaller padding */
-    }
-  }
-
-}
-
-/* Tablet and larger screens */
-@media (min-width: 577px) {
-  .layout-wrapper {
-   // padding: 1rem; /* Slightly larger padding for larger screens */
-  }
-}
