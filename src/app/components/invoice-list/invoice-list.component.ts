@@ -6,6 +6,7 @@ import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, OnDestro
    import { MatListModule } from '@angular/material/list';
    import { InvoiceService } from '../../services/invoice.service';
    import jsPDF from 'jspdf';
+   import 'jspdf-autotable';
    import { Invoice } from '../../interface/invoice.interface';
    import {MatIconModule} from '@angular/material/icon';
    import {MatDividerModule} from '@angular/material/divider';
@@ -60,29 +61,15 @@ import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, OnDestro
 
 
      regeneratePdf(invoice: Invoice): void {
-       const pdf = new jsPDF();
-       pdf.setFontSize(16);
-       pdf.text('Invoice Details', 10, 10);
-       pdf.setFontSize(12);
-       pdf.text(`Full Name: ${invoice.fullName}`, 10, 20);
-       pdf.text(`Email: ${invoice.email}`, 10, 30);
-       pdf.text(`Phone: ${invoice.phone || 'N/A'}`, 10, 40);
-       pdf.text(`Invoice Number: ${invoice.invoiceNumber}`, 10, 50);
-       pdf.text(`Amount: ${invoice.amount}`, 10, 60);
-       pdf.text(`Invoice Date: ${new Date(invoice.invoiceDate).toLocaleDateString()}`, 10, 70);
-
-       if (invoice.signature) {
-         pdf.text('Signature:', 10, 80);
-         pdf.addImage(invoice.signature, 'PNG', 10, 85, 100, 40);
-       }
-
-       const pdfBlob = pdf.output('blob');
-       const url = URL.createObjectURL(pdfBlob);
-       const newWindow = window.open(url, '_blank');
-       if (!newWindow) {
-         this.snackBar.open('Popup blocked. Please allow popups.', 'Close', { duration: 5000 });
-       }
-     }
+      const { url } = this.invoiceService.generateInvoicePdf(invoice);
+      const newWindow = window.open(url, '_blank');
+      if (!newWindow) {
+        this.snackBar.open('Popup blocked. Please allow popups.', 'Close', {
+          duration: 5000,
+          panelClass: ['error-snackbar']
+        });
+      }
+    }
 
      ngOnDestroy(): void {
       this.subscription.unsubscribe();
