@@ -1,11 +1,26 @@
+@import "../../../theme";
 :host{
   width: 70%;
 }
 mat-list{
+  overflow: auto;
+  max-height: 60vh;
   .wrapper{
     color: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
   }
+}
+.header{
+  background-color: $main-red;
+  height: 3rem;
+  padding: 0.2rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid white;
+  font-size: x-large;
+  font-weight: bold;
 }

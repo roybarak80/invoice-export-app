@@ -1,6 +1,7 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export function alphanumericValidator(control: AbstractControl): ValidationErrors | null {
+  if (!control.value) return null;
   return /^[a-zA-Z0-9]*$/.test(control.value) ? null : { alphanumeric: true };
 }
 
@@ -12,10 +13,7 @@ export function phoneValidator(control: AbstractControl): ValidationErrors | nul
 export function positiveNumberValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const value = control.value;
-    console.log(value);
     if (value == null || value === '' || value === 0) {
-      console.log(value);
-
       return null;
     }
     return value > 0 ? null : { positiveNumber: true };
