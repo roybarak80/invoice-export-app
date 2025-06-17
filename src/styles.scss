@@ -3,19 +3,17 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-/* Snackbar styles */
-.success-snackbar {
-  background-color: #4caf50; /* Green for success */
-  color: white;
-  .mat-mdc-snack-bar-action {
-    color: white;
+
+.mat-mdc-snack-bar-container {
+  &.success-snackbar {
+    --mdc-snackbar-container-color:#4caf50;
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #fff;
+  }
+  &.error-snackbar {
+    --mdc-snackbar-container-color:#f44336;
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #fff;
   }
 }
 
-.error-snackbar {
-  background-color: #f44336; /* Red for error */
-  color: white;
-  .mat-mdc-snack-bar-action {
-    color: white;
-  }
-}
