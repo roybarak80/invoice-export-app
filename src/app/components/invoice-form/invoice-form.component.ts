@@ -12,8 +12,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { InvoiceService } from '../../services/invoice.service';
 import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
 import { Invoice } from '../../interface/invoice.interface';
+
 @Component({
   selector: 'app-invoice-form',
   templateUrl: './invoice-form.component.html',
@@ -30,7 +30,7 @@ import { Invoice } from '../../interface/invoice.interface';
     MatButtonModule,
     MatSnackBarModule,
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InvoiceFormComponent implements OnInit {
   form!: FormGroup;
@@ -53,55 +53,37 @@ export class InvoiceFormComponent implements OnInit {
       invoiceNumber: ['', [Validators.required, alphanumericValidator]],
       amount: ['', [Validators.required, positiveNumberValidator]],
       invoiceDate: ['', Validators.required],
-      signature: ['', Validators.required]
+      signature: ['', Validators.required],
     });
   }
 
-  onSignatureProvided(valid: boolean): void {
-    this.signatureProvided = valid;
+  onFirstInteraction() {
+    this.form.markAllAsTouched();
+    this.cdr.markForCheck();
+  }
+
+  onSignatureProvided(_: boolean): void {
+    const signatureImage = this.signaturePadComponent.getSignatureImage();
+    this.signatureProvided = !!signatureImage;
+    this.form.get('signature')?.setValue(signatureImage || '');
     this.cdr.markForCheck();
   }
 
   clearSignature(): void {
     this.signaturePadComponent.clear();
     this.form.get('signature')?.setValue('');
-    this.form.get('signature')?.markAsUntouched(); // Prevent validation error
     this.signatureProvided = false;
     this.cdr.markForCheck();
   }
 
   resetForm() {
     this.form.reset();
-    this.form.markAsPristine();
-    this.form.markAsUntouched();
-    Object.keys(this.form.controls).forEach(key => {
-      this.form.get(key)?.setErrors(null);
-    });
+    this.form.markAllAsTouched();
     this.signaturePadComponent.clear();
+    this.form.get('signature')?.setValue('');
     this.signatureProvided = false;
+    this.isSubmitting = false;
     this.cdr.markForCheck();
-  }
-
-  // Helper function to load font file as base64
-  async loadFontAsBase64(url: string): Promise<string> {
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch font file: ${response.statusText}`);
-      }
-      const arrayBuffer = await response.arrayBuffer();
-      const base64data = btoa(
-        new Uint8Array(arrayBuffer)
-          .reduce((data, byte) => data + String.fromCharCode(byte), '')
-      );
-      if (!/^[A-Za-z0-9+/=]+$/.test(base64data)) {
-        throw new Error('Invalid base64 data for font file');
-      }
-      return base64data;
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      throw new Error(`Font loading error: ${errorMessage}`);
-    }
   }
 
   async onSubmit(): Promise<void> {
@@ -109,7 +91,7 @@ export class InvoiceFormComponent implements OnInit {
       this.form.markAllAsTouched();
       this.snackBar.open('Please fill all required fields and provide a signature.', 'Close', {
         duration: 3000,
-        panelClass: ['error-snackbar']
+        panelClass: ['error-snackbar'],
       });
       this.cdr.markForCheck();
       return;
@@ -121,7 +103,7 @@ export class InvoiceFormComponent implements OnInit {
     try {
       const formData: Invoice = {
         ...this.form.value,
-        signature: this.signaturePadComponent.getSignatureImage() || ''
+        signature: this.signaturePadComponent.getSignatureImage() || '',
       };
 
       const pdf = new jsPDF();
@@ -144,15 +126,14 @@ export class InvoiceFormComponent implements OnInit {
       await this.invoiceService.submitInvoice(formData, blob).toPromise();
       this.snackBar.open('Invoice submitted successfully!', 'Close', {
         duration: 3000,
-        panelClass: ['success-snackbar']
+        panelClass: ['success-snackbar'],
       });
 
       this.resetForm();
-
     } catch (error: any) {
       this.snackBar.open(error.message || 'Submission failed. Please try again or contact support.', 'Close', {
         duration: 5000,
-        panelClass: ['error-snackbar']
+        panelClass: ['error-snackbar'],
       });
     } finally {
       this.isSubmitting = false;

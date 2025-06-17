@@ -5,7 +5,7 @@
   <!-- Personal Details -->
   <mat-form-field appearance="fill" class="full-width">
     <mat-label>Full Name</mat-label>
-    <input matInput formControlName="fullName" required />
+    <input matInput formControlName="fullName" required (focus)="onFirstInteraction()"/>
     <mat-error *ngIf="form.get('fullName')?.hasError('required') && form.get('fullName')?.touched">
       Full Name is required
     </mat-error>
@@ -13,7 +13,7 @@
 
   <mat-form-field appearance="fill" class="full-width">
     <mat-label>Email Address</mat-label>
-    <input matInput formControlName="email" required />
+    <input matInput formControlName="email" required (focus)="onFirstInteraction()"/>
     <mat-error *ngIf="form.get('email')?.hasError('required') && form.get('email')?.touched">
       Email is required
     </mat-error>
@@ -24,7 +24,7 @@
 
   <mat-form-field appearance="fill" class="full-width">
     <mat-label>Phone Number</mat-label>
-    <input matInput formControlName="phone" />
+    <input matInput formControlName="phone" required (focus)="onFirstInteraction()"/>
     <mat-error *ngIf="form.get('phone')?.hasError('invalidPhone') && form.get('phone')?.touched">
       Please enter a valid phone number
     </mat-error>
@@ -33,7 +33,7 @@
   <!-- Invoice Details -->
   <mat-form-field appearance="fill" class="full-width">
     <mat-label>Invoice Number</mat-label>
-    <input matInput formControlName="invoiceNumber" required />
+    <input matInput formControlName="invoiceNumber" required (focus)="onFirstInteraction()"/>
     <mat-error *ngIf="form.get('invoiceNumber')?.hasError('required') && form.get('invoiceNumber')?.touched">
       Invoice Number is required
     </mat-error>
@@ -44,7 +44,7 @@
 
   <mat-form-field appearance="fill" class="full-width">
     <mat-label>Amount</mat-label>
-    <input matInput type="number" formControlName="amount" min="0" required />
+    <input matInput type="number" formControlName="amount" min="0" (focus)="onFirstInteraction()"/>
     <mat-error *ngIf="form.get('amount')?.hasError('required') && form.get('amount')?.touched">
       Amount is required
     </mat-error>
@@ -55,7 +55,7 @@
 
   <mat-form-field appearance="fill" class="full-width">
     <mat-label>Invoice Date</mat-label>
-    <input matInput [matDatepicker]="picker" formControlName="invoiceDate" required />
+    <input matInput [matDatepicker]="picker" formControlName="invoiceDate" required (focus)="onFirstInteraction()"/>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
     <mat-error *ngIf="form.get('invoiceDate')?.hasError('required') && form.get('invoiceDate')?.touched">
@@ -65,20 +65,21 @@
 </div>
    <!-- Signature Pad -->
    <app-signature-pad (signatureProvided)="onSignatureProvided($event)" #signaturePad></app-signature-pad>
-   <div *ngIf="form.get('signature')?.hasError('required') && (form.get('signature')?.touched || isSubmitting)" class="error">
-    Signature is required.
-  </div>
+   <div *ngIf="form.get('signature')?.invalid && (form.get('signature')?.touched || isSubmitting)" class="mat-mdc-form-field-error">
+     Signature is required.
+   </div>
 
 <div class="buttons-wrapper">
 
-  <button type="submit" mat-raised-button color="primary"  (click)="clearSignature()">
+  <button type="button" mat-raised-button color="primary" (click)="clearSignature()">
     Clear
   </button>
     <button
     mat-raised-button
     color="primary"
     type="submit"
-    [disabled]="form.invalid || !signatureProvided || isSubmitting">
+    [disabled]="form.invalid || !signatureProvided || isSubmitting"
+>
     {{ isSubmitting ? 'Submitting...' : 'Submit' }}
   </button>
 </div>
