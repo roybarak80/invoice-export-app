@@ -73,10 +73,21 @@
   <button type="submit" mat-raised-button color="primary"  (click)="clearSignature()">
     Clear
   </button>
+<<<<<<< Updated upstream
     <!-- Submit Button -->
     <button type="submit"  color="primary" [disabled]="form.invalid || !signatureProvided">
       Submit
     </button>
+=======
+    <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="form.invalid || !signatureProvided || isSubmitting"
+  >
+    {{ isSubmitting ? 'Submitting...' : 'Submit' }}
+  </button>
+>>>>>>> Stashed changes
 </div>
 
 </form>
