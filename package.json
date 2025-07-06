@@ -11,7 +11,8 @@
     "test": "ng test",
     "start": "ng serve",
     "start:api": "node server.js",
-    "start:all": "concurrently --names \"ANGULAR,API\" \"npm run start\" \"npm run start:api\""
+    "start:all": "concurrently --names \"ANGULAR,API\" \"npm run start\" \"npm run start:api\"",
+    "postinstall": "ng build --configuration production"
   },
   "private": true,
   "dependencies": {

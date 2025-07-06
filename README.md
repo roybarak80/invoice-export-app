@@ -1,8 +1,86 @@
 # Invoice Export App
 
-A Dockerized application featuring an Angular frontend served by Nginx and a `json-server` backend providing mock invoice data at `http://localhost:3000/api/invoices`. Docker Compose is used to manage both services.
+An Angular application for creating and exporting invoices with signature support.
 
-A demo video showcasing the application's usage is available in the repository.
+## Features
+
+- Create invoices with customer details
+- Digital signature support
+- PDF export functionality
+- JSON Server backend for data persistence
+
+## Local Development
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Start the development server:
+   ```bash
+   npm run start:all
+   ```
+
+This will start both the Angular frontend (port 4200) and the JSON Server API (port 3000).
+
+## Deployment to Render.com
+
+### Option 1: Using render.yaml (Recommended)
+
+1. Push your code to a Git repository (GitHub, GitLab, etc.)
+2. Connect your repository to Render.com
+3. Render will automatically detect the `render.yaml` file and deploy both services
+
+### Option 2: Manual Deployment
+
+#### Deploy Frontend (Static Site)
+
+1. Create a new **Static Site** service in Render
+2. Connect your Git repository
+3. Configure the build settings:
+   - **Build Command**: `npm install && npm run build`
+   - **Publish Directory**: `dist/invoice-export-app`
+
+#### Deploy Backend (Web Service)
+
+1. Create a new **Web Service** in Render
+2. Connect your Git repository
+3. Configure the settings:
+   - **Environment**: Node
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm run start:api`
+   - **Environment Variables**:
+     - `NODE_ENV`: `production`
+     - `PORT`: `10000`
+
+### Update API URL
+
+After deploying the backend, update the API URL in `src/environments/environment.prod.ts`:
+
+```typescript
+export const environment = {
+  production: true,
+  apiBaseUrl: 'https://your-api-service-name.onrender.com/api'
+};
+```
+
+Replace `your-api-service-name` with your actual Render service name.
+
+## Project Structure
+
+- `src/` - Angular application source code
+- `server.js` - JSON Server backend
+- `db.json` - Database file
+- `render.yaml` - Render deployment configuration
+
+## Technologies Used
+
+- Angular 17
+- Angular Material
+- JSON Server
+- jsPDF
+- html2canvas
+- ngx-signaturepad
 
 ## Docker Images
 - **Frontend**: `roybarak1/invoice-angular-app:latest` ([Docker Hub](https://hub.docker.com/r/roybarak1/invoice-angular-app))
@@ -45,7 +123,7 @@ docker-compose up -d
 
 ## Additional Information
 - **Source Code**: [https://github.com/roybarak80/invoice-export-app](https://github.com/roybarak80/invoice-export-app)
-- **Note**: If the app doesn’t load in a regular browser, clear the cache or use incognito mode.
+- **Note**: If the app doesn't load in a regular browser, clear the cache or use incognito mode.
 - **Troubleshooting**: If the `invoice-export-app-backend-1` container is not running, restart it with:
   ```bash
   docker-compose restart invoice-export-app-backend-1

@@ -1,0 +1,23 @@
+services:
+  # Frontend Angular App
+  - type: web
+    name: invoice-export-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist/invoice-export-app
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+  # Backend API Server
+  - type: web
+    name: invoice-export-api
+    env: node
+    buildCommand: npm install
+    startCommand: npm run start:api
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000 
