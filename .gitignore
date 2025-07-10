@@ -60,3 +60,6 @@ jspm_packages/
 
 # dotenv environment variables file
 .env
+
+# Remove or comment out db.json
+db.json
